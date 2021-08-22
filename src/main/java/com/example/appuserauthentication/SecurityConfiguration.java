@@ -38,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .antMatchers("/")
         .permitAll()
         .and()
-        .formLogin();
+        .formLogin().defaultSuccessUrl("/user", true);
   }
 
   @Bean

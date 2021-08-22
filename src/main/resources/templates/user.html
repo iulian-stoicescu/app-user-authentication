@@ -5,6 +5,17 @@
   <title>User page</title>
 </head>
 <body>
-<h1>Welcome user!</h1>
+<h1>Welcome to the user page!</h1>
+
+<div>
+  <h4>User details:</h4>
+  <p th:inline="text">Username: [[${#authentication.getPrincipal().getUsername()}]]</p>
+  <p th:inline="text">Age: [[${#authentication.getPrincipal().getAge()}]]</p>
+  <p th:inline="text">Address: [[${#authentication.getPrincipal().getAddress()}]]</p>
+</div>
+
+<form th:action="@{/logout}">
+  <input type="submit" value="Log Out"/>
+</form>
 </body>
 </html>

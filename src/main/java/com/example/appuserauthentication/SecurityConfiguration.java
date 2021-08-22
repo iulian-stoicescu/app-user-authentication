@@ -16,11 +16,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   private final UserDetailsService userDetailsService;
+  private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
   @Autowired
-  public SecurityConfiguration(UserDetailsService userDetailsService) {
+  public SecurityConfiguration(
+      UserDetailsService userDetailsService, CustomAccessDeniedHandler customAccessDeniedHandler) {
     super();
     this.userDetailsService = userDetailsService;
+    this.customAccessDeniedHandler = customAccessDeniedHandler;
   }
 
   @Override
@@ -38,7 +41,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .antMatchers("/")
         .permitAll()
         .and()
-        .formLogin().defaultSuccessUrl("/user", true);
+        .formLogin()
+        .defaultSuccessUrl("/user", true)
+        .and()
+        .exceptionHandling()
+        .accessDeniedHandler(customAccessDeniedHandler);
   }
 
   @Bean
